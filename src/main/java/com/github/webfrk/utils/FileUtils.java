@@ -20,14 +20,19 @@ public class FileUtils {
 		
 		File fdir = new File(dir);
 		
+		// create directory
 		if (!fdir.exists()) {
 			fdir.mkdirs();
 		}
 		
+		// delete existing file
 		File file = new File(fdir, name);
-		file.deleteOnExit();
-		file.createNewFile();
+		if (file.exists()) {
+			file.delete();
+		}
 		
+		// create new file
+		file.createNewFile();
 		FileWriter fileWritter = new FileWriter(file, true);
 		BufferedWriter out = new BufferedWriter(fileWritter);
 		out.write(data);

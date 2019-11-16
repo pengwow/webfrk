@@ -35,7 +35,8 @@ public class SpringBootGenerator {
 	
 	public void generate() throws Exception {
 		System.out.println("generating ApplicationServer.class");
-		FileUtils.createFile(CODE_PATH, "ApplicationServer.java", bootClass.generate());
+		String dir = CODE_PATH + "/" + bootClass.getPkgName().replaceAll("\\.", "/");
+		FileUtils.createFile(dir, "ApplicationServer.java", bootClass.generate());
 		System.out.println("generating application.yml");
 		FileUtils.createFile(CONFIG_PATH, "application.yml", yml.generate());
 		System.out.println("generating log4j.properties");
@@ -92,7 +93,7 @@ public class SpringBootGenerator {
 				"	public static void main(String[] args) {\r\n" + 
 				"		SpringApplication.run(ApplicationServer.class, args);\r\n" + 
 				"	}\r\n" + 
-				"	@Override\r\n" + 
+				"	\r\n" + 
 				"	public void addInterceptors(InterceptorRegistry registry) {\r\n" + 
 				"		registry.addInterceptor(new CorsInterceptor())\r\n" + 
 				"						.addPathPatterns(\"/**\");\r\n" + 
@@ -119,6 +120,8 @@ public class SpringBootGenerator {
 				"	}\r\n" + 
 				"}";
 		
+		protected final String pkgName;
+		
 		protected List<String> services;
 		
 		protected List<String> mappers;
@@ -136,7 +139,7 @@ public class SpringBootGenerator {
 			if (pkgName == null) {
 				throw new RuntimeException();
 			}
-			
+			this.pkgName = pkgName;
 			this.services = (services == null ) ? new ArrayList<String>(): services;
 			this.mappers = (mappers == null ) ? new ArrayList<String>(): mappers;
 			IMPORT = (mappers == null) ? IMPORT : IMPORT 
@@ -147,7 +150,7 @@ public class SpringBootGenerator {
 		public String generate() {
 			
 			StringBuffer sb = new StringBuffer();
-			sb.append(COPYRIGHT).append(IMPORT).append(AUTHOR);
+			sb.append(COPYRIGHT).append(PACKAGE).append(IMPORT).append(AUTHOR);
 			
 			
 			sb.append("@SpringBootApplication\n");
@@ -170,6 +173,11 @@ public class SpringBootGenerator {
 			sb.append(CLASS);
 			return sb.toString();
 		}
+
+		public String getPkgName() {
+			return pkgName;
+		}
+		
 	}
 	
 	/**
@@ -195,11 +203,11 @@ public class SpringBootGenerator {
 				"     password: PWD\r\n" + 
 				"     driverClassName: com.mysql.cj.jdbc.Driver";
 		
-		protected YML() {
+		public YML() {
 			this(null, null, null);
 		}
 		
-		protected YML(String url, String user, String pwd) {
+		public YML(String url, String user, String pwd) {
 			if (url == null && user == null && pwd == null) {
 				YML_MYSQL = "";
 			} else if (url != null && user != null && pwd != null) {
@@ -244,20 +252,4 @@ public class SpringBootGenerator {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		List<String> sers = new ArrayList<String>();
-		sers.add("dev.examples.services");
-		
-		List<String> maps = new ArrayList<String>();
-		maps.add("dev.examples.mappers");
-		
-		SpringBootGenerator.BootClass bc = new SpringBootGenerator.BootClass("com.github.webfrk", sers, maps);
-		bc.generate();
-		
-		@SuppressWarnings("unused")
-		String jdbc = "jdbc:mysql://127.0.0.1:3306/test";
-		
-		SpringBootGenerator.YML yml = new SpringBootGenerator.YML();
-		yml.generate();
-	}
 }
