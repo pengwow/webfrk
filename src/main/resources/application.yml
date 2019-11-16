@@ -1,0 +1,16 @@
+# General configuration
+server:
+  port: 9090
+  servlet:
+    context-path: /application/v2.0
+
+logging:
+  config: classpath:log4j.properties
+
+spring:
+   main:    allow-bean-definition-overriding: true
+   datasource:
+     url: jdbc:mysql://127.0.0.1:3306/test
+     username: root
+     password: onceas
+     driverClassName: com.mysql.cj.jdbc.Driver
