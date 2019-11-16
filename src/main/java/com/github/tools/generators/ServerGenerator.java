@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.github.tools.annotations.ServiceDefinition;
 
 /**
- * @author wuheng
+ * @author wuheng@otcaix.iscas.ac.cn
  * @since 24
  * 
  *  mysqldump -h 172.17.0.2 -u root -p demo user> dbname_users.sql
