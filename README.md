@@ -38,8 +38,7 @@
 
 生成ApplicationServer（用于启动Web应用），application.yml（Web应用相关配置）和log4j.proerties（日志输出配置）。
 ```
-SpringBootGenerator sbg = new SpringBootGenerator();
-sbg.setPackage("dev.examples"); //需要生成类的包名
+SpringBootGenerator sbg = new SpringBootGenerator("dev.examples"); //需要生成类的包名 
 List<String> services = new ArrayList<String>();
 services.add("dev.examples.services"); //实现com.github.webfrk.core.HttpBodyHandler和标注了com.github.tools.annotations.ServiceDefinition的类目录，可以有多个
 sbg.setServices(services);
