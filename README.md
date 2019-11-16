@@ -38,14 +38,35 @@
 
 生成ApplicationServer（用于启动Web应用），application.yml（Web应用相关配置）和log4j.proerties（日志输出配置）。
 ```
-SpringBootGenerator sbg = new SpringBootGenerator("dev.examples"); //需要生成类的包名 
-List<String> services = new ArrayList<String>();
-services.add("dev.examples.services"); //实现com.github.webfrk.core.HttpBodyHandler和标注了com.github.tools.annotations.ServiceDefinition的类目录，可以有多个
-sbg.setServices(services);
-List<String> mappers = mew ArrayList<String>();
-mappers.add("dev.examples.mappers"); //标注了org.apache.ibatis.annotations.Mapper的类目录，可以有多个 
-sbg.setMappers(mappers);
+List<String> sers = new ArrayList<String>();
+sers.add("dev.examples.services");
+List<String> maps = new ArrayList<String>();  // 如果不使用JDBC，则可以是null
+maps.add("dev.examples.mappers");
+SpringBootGenerator.BootClass bc = new SpringBootGenerator.BootClass("com.github.webfrk", sers, maps);
+		
+String jdbc = "jdbc:mysql://127.0.0.1:3306/test"; //可选
+SpringBootGenerator.YML yml = new SpringBootGenerator.YML(jdbc, "root", "onceas"); //可以不传任何参数，如果不使用JDBC
+
+SpringBootGenerator sbg = new SpringBootGenerator(bc, yml);
 sbg.generate();
+```
+
+更新pom.xml，如果使用JDBC，则确保以下配置存在。否则，必须删除以下两个依赖
+
+```
+<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis-spring-boot-starter.version}</version>
+		</dependency>
 ```
 
 运行com.github.webfrk.ApplicationServer
@@ -69,7 +90,7 @@ sbg.generate();
 # 4. 研发计划
 
 - 1.x 基本能力的支撑
-  - 1.0.0: 支持跨域访问
+  - ~~1.0.0: 支持跨域访问~~
   - 1.1.0: 支持JSR303
   - 1.2.0: 支持Sql自动生成
   - 1.3.0: 支持Servcie自动生成
