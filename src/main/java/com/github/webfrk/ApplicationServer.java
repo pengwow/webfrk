@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author wuheng@otcaix.iscas.ac.cn
+ * @author xuyuanjia2017@otcaix.iscas.ac.cn
  * @since 2019/11/16
  * 
  * <p>
@@ -51,9 +52,6 @@ public class ApplicationServer implements WebMvcConfigurer {
 	}
 	
 	/**
-	 * @author xuyuanjia2017@otcaix.iscas.ac.cn
-	 * @since  2019/11/16
-	 *  
 	 * <p>
      * The {@code CorsInterceptor} class is used for solving the cross-domain issue.
 	 */

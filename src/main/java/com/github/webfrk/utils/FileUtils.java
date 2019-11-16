@@ -8,15 +8,18 @@ import java.io.File;
 import java.io.FileWriter;
 
 /**
- * @author wuheng
- * @since  2019.3.7
- * 
+ * @author wuheng@otcaix.iscas.ac.cn
+ * @since  2019/11/16
+ *
+ *  
  */
 
 public class FileUtils {
 
 	public static void createFile(String dir, String name, String data) throws Exception {
+		
 		File fdir = new File(dir);
+		
 		if (!fdir.exists()) {
 			fdir.mkdirs();
 		}
@@ -25,14 +28,11 @@ public class FileUtils {
 		file.deleteOnExit();
 		file.createNewFile();
 		
-		Thread.sleep(2000);
-		
 		FileWriter fileWritter = new FileWriter(file, true);
 		BufferedWriter out = new BufferedWriter(fileWritter);
 		out.write(data);
 		out.flush();
 		out.close();
 		
-		Thread.sleep(3000);
 	}
 }

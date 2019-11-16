@@ -1,8 +1,8 @@
 # General configuration
 server:
-  port: 9090
+  port: 8080
   servlet:
-    context-path: /application/v2.0
+    context-path: /webfrk/1.0.0
 
 logging:
   config: classpath:log4j.properties
