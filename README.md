@@ -74,6 +74,7 @@ sbg.generate();
 ## 1.4 局限
 
 - [Java版本必须大于1.8，建议使用Oracle JDK，且开启反射参数-parameter](https://blog.csdn.net/sanyuesan0000/article/details/80618913)
+- [mysql必须设置成正确的时区](https://blog.csdn.net/HW_870754395/article/details/88430293)
 
 # 2. 主要架构
 
